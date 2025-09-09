@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Emotional Support Chatbot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <h1>🐾 Emotional Support Chatbot</h1>
+      <div class="role-switch">
+        <label for="role">Character:</label>
+        <select id="role">
+          <option value="Cat">Cat 🐱</option>
+          <option value="Friend">Friend 🙂</option>
+          <option value="Therapist">Therapist 🧑‍⚕️</option>
+        </select>
+        <button id="clear">Clear</button>
+      </div>
+    </header>
+
+    <main id="chat" class="chat"></main>
+
+    <footer class="composer">
+      <input id="message" type="text" placeholder="Type your message..." />
+      <button id="send">Send</button>
+    </footer>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
