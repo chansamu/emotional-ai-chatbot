@@ -13,7 +13,7 @@ A simple web-based emotional support chatbot with multiple character roles (Cat,
   - **Therapist 🧑‍⚕️** – reflective, gentle guidance, CBT-style suggestions
 - Keeps conversation history
 - Mobile-friendly web interface
-- Uses [Groq](https://www.groq.ai/) LLM for AI responses
+- Uses [Groq](https://www.groq.com/) LLM for AI responses
 - Supports 24-hour format timestamps in chat
 
 ---
