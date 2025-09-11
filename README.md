@@ -24,3 +24,4 @@ A simple web-based emotional support chatbot with multiple character roles (Cat,
 - **AI**: Groq LLM (`llama-3.1-8b-instant`)
 - **Deployment**: Local development server (`http://localhost:5001`)
 
+<img width="415" height="214" alt="image" src="https://github.com/user-attachments/assets/3de8fc45-6afd-4b31-a3f1-25f765d9d759" />
