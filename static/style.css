@@ -1,140 +1,186 @@
 :root{
-    --bg:#f6f7fb;
-    --card:#ffffff;
-    --text:#1f2937;
-    --muted:#6b7280;
-    --bubble-user:#dcf8c6;
-    --bubble-assistant:#f1f0f0;
-    --shadow: 0 6px 24px rgba(0,0,0,0.08);
-  }
-  
-  *{ box-sizing:border-box; }
-  html,body{ height:100%; }
-  body{
-    margin:0;
-    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    background: var(--bg);
-    color: var(--text);
-  }
-  
-  .app{
-    max-width: 820px;
-    margin: 24px auto;
-    background: var(--card);
-    border-radius: 16px;
-    box-shadow: var(--shadow);
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    height: calc(100vh - 48px);
-  }
-  
-  .app-header{
-    padding: 16px 20px;
-    border-bottom: 1px solid #eee;
-    display:flex;
-    align-items:center;
-    justify-content: space-between;
-    gap: 12px;
-  }
-  h1{ font-size: 18px; margin:0; }
-  .role-switch{
-    display:flex; align-items:center; gap:8px;
-  }
-  .role-switch select, .role-switch button{
-    padding: 8px 10px;
-    border:1px solid #e5e7eb;
-    border-radius: 10px;
-    background: #fff;
-  }
-  
-  .chat{
-    padding: 16px;
-    overflow-y: auto;
-    display:flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .msg-row{
-    display:flex;
-    gap:10px;
-    align-items:flex-end;
-  }
-  
-  .msg-row.user { justify-content: flex-end; }
-  .msg-row.assistant { justify-content: flex-start; }
-  
-  .avatar{
-    font-size: 22px;
-    line-height: 1;
-    width: 28px;
-    text-align: center;
-  }
-  
-  .bubble{
-    max-width: 68%;
-    padding: 10px 12px 18px; /* save space for timestamp */
-    border-radius: 14px;
-    position: relative;
-    word-wrap: break-word;
-    white-space: pre-wrap;
-  }
-  
-  .user .bubble{
-    background: var(--bubble-user);
-    border-bottom-right-radius: 6px;
-  }
-  .assistant .bubble{
-    background: var(--bubble-assistant);
-    border-bottom-left-radius: 6px;
-  }
-  
-  .timestamp{
-    position: absolute;
-    right: 8px;
-    bottom: 6px;
-    font-size: 11px;
-    color: var(--muted);
-  }
-  
-  .composer{
-    padding: 12px;
-    border-top: 1px solid #eee;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 10px;
-  }
-  .composer input{
-    padding: 12px 14px;
-    border:1px solid #e5e7eb;
-    border-radius: 12px;
-    outline: none;
-  }
-  .composer button{
-    padding: 12px 16px;
-    border:none;
-    border-radius: 12px;
-    background: #111827;
-    color: #fff;
-    cursor: pointer;
-  }
-  
-  .typing{
-    display:inline-block;
-    width: 36px;
-    height: 12px;
-    background:
-      radial-gradient(circle closest-side, #9ca3af 90%, #0000) 0%   50%,
-      radial-gradient(circle closest-side, #9ca3af 90%, #0000) 50%  50%,
-      radial-gradient(circle closest-side, #9ca3af 90%, #0000) 100% 50%;
-    background-size: 8px 8px;
-    background-repeat: no-repeat;
-    animation: d3 1s infinite linear;
-  }
-  @keyframes d3 {
-    0% { background-position: 0% 50%, 50% 50%, 100% 50% }
-    33.33% { background-position: 50% 50%, 100% 50%, 0% 50% }
-    66.66% { background-position: 100% 50%, 0% 50%, 50% 50% }
-    100% { background-position: 0% 50%, 50% 50%, 100% 50% }
-  }
-  
+  --bg:#f6f7fb;
+  --card:#ffffff;
+  --text:#1f2937;
+  --muted:#6b7280;
+  --bubble-user:#dcf8c6;
+  --bubble-assistant:#f1f0f0;
+  --shadow: 0 6px 24px rgba(0,0,0,0.08);
+}
+
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{
+  margin:0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.app{
+  max-width: 820px;
+  margin: 24px auto;
+  background: var(--card);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: calc(100vh - 48px);
+}
+
+.app-header{
+  padding: 16px 20px;
+  border-bottom: 1px solid #eee;
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  gap: 12px;
+}
+h1{ font-size: 18px; margin:0; }
+.role-switch{
+  display:flex; align-items:center; gap:8px;
+}
+.role-switch select, .role-switch button{
+  padding: 8px 10px;
+  border:1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.chat{
+  padding: 16px;
+  overflow-y: auto;
+  display:flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.msg-row{
+  display:flex;
+  gap:10px;
+  align-items:flex-end;
+}
+
+.msg-row.user { justify-content: flex-end; }
+.msg-row.assistant { justify-content: flex-start; }
+
+.avatar{
+  font-size: 22px;
+  line-height: 1;
+  width: 28px;
+  text-align: center;
+}
+
+.bubble{
+  max-width: 68%;
+  padding: 10px 12px;
+  border-radius: 14px;
+  position: relative; /* needed for absolute timestamp */
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.user .bubble {
+  background: var(--bubble-user);
+  border-bottom-right-radius: 6px;
+  padding-bottom: 20px; /* extra space for timestamp */
+}
+
+
+
+.assistant .bubble{
+  background: var(--bubble-assistant);
+  border-bottom-left-radius: 6px;
+}
+
+/* Timestamp inside user bubble, positioned bottom-right */
+.msg-row.user .bubble .timestamp {
+  position: absolute;
+  right: 8px; /* distance from right edge */
+  bottom: 4px; /* distance from bottom edge, adjust for "half-line" effect */
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* Bubble footer for assistant (buttons + timestamp) */
+.bubble-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* Buttons for play/pause/stop */
+.speak-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--muted);
+  padding: 0;
+  margin-right: 4px;
+}
+.speak-btn:hover {
+  color: #111827;
+}
+
+.hidden {
+  display: none;
+}
+
+.composer{
+  padding: 12px;
+  border-top: 1px solid #eee;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 10px;
+}
+.composer input{
+  padding: 12px 14px;
+  border:1px solid #e5e7eb;
+  border-radius: 12px;
+  outline: none;
+}
+.composer button{
+  padding: 12px 16px;
+  border:none;
+  border-radius: 12px;
+  background: #111827;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Typing dots animation */
+.typing{
+  display:inline-block;
+  width: 36px;
+  height: 12px;
+  background:
+    radial-gradient(circle closest-side, #9ca3af 90%, #0000) 0%   50%,
+    radial-gradient(circle closest-side, #9ca3af 90%, #0000) 50%  50%,
+    radial-gradient(circle closest-side, #9ca3af 90%, #0000) 100% 50%;
+  background-size: 8px 8px;
+  background-repeat: no-repeat;
+  animation: d3 1s infinite linear;
+}
+@keyframes d3 {
+  0% { background-position: 0% 50%, 50% 50%, 100% 50% }
+  33.33% { background-position: 50% 50%, 100% 50%, 0% 50% }
+  66.66% { background-position: 100% 50%, 0% 50%, 50% 50% }
+  100% { background-position: 0% 50%, 50% 50%, 100% 50% }
+}
+
+/* Mic button for speech-to-text */
+#mic{
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: var(--muted);
+}
+#mic.listening{
+  color: red;
+}
