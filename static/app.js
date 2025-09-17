@@ -48,34 +48,58 @@ function appendUserBubble(text) {
 }
 
 
+// Role-based voice mapping
+const voiceMapping = {
+  Cat: { name: "Google US English", rate: 1.1, pitch: 1.3 },
+  Friend: { name: "Nicky, US", rate: 1.2, pitch: 1.1 },
+  Therapist: { name: "Google UK English Female", rate: 1.1, pitch: 1.0 }
+};
+
+
+// safely pick a voice by name, with fallback
+function pickVoice(preferredName) {
+  const voices = speechSynthesis.getVoices();
+  // Try exact match
+  let voice = voices.find(v => v.name === preferredName);
+  if (!voice) {
+    // Try partial match (case-insensitive)
+    voice = voices.find(v => v.name.toLowerCase().includes(preferredName.toLowerCase()));
+  }
+  // Fallback: any English voice, or first available
+  if (!voice) {
+    voice = voices.find(v => v.lang.startsWith("en")) || voices[0];
+  }
+  return voice;
+}
+
+// Cache voices once loaded
+let allVoices = [];
+window.speechSynthesis.onvoiceschanged = () => {
+  allVoices = speechSynthesis.getVoices();
+};
+
 // Append assistant message bubble with avatar, text, timestamp, and play controls
 function appendAssistantBubble(text) {
   const row = document.createElement("div");
   row.className = "msg-row assistant";
 
-  // Avatar (emoji based on current role)
   const avatar = document.createElement("div");
   avatar.className = "avatar";
   avatar.textContent = assistantEmoji[currentRole];
 
-  // Message bubble
   const bubble = document.createElement("div");
   bubble.className = "bubble";
 
-  // Add reply text
   const replyText = document.createElement("span");
   replyText.textContent = text;
   bubble.appendChild(replyText);
 
-  // Footer container (buttons + timestamp)
   const footer = document.createElement("div");
   footer.className = "bubble-footer";
 
-  // Play button container
   const controls = document.createElement("div");
   controls.className = "audio-controls";
 
-  // Buttons
   const playBtn = document.createElement("button");
   playBtn.className = "speak-btn";
   playBtn.textContent = "▶️";
@@ -88,18 +112,23 @@ function appendAssistantBubble(text) {
   stopBtn.className = "speak-btn hidden";
   stopBtn.textContent = "⏹️";
 
-  // Timestamp
   const ts = document.createElement("span");
   ts.className = "timestamp";
   ts.textContent = nowHHMM();
 
-  // Speech synthesis logic
   let utterance = null;
 
   playBtn.onclick = () => {
     if (speechSynthesis.speaking) speechSynthesis.cancel();
 
+    const config = voiceMapping[currentRole];
     utterance = new SpeechSynthesisUtterance(text);
+
+    // Apply role-specific voice settings
+    utterance.voice = pickVoice(config.name);
+    utterance.rate = config.rate;
+    utterance.pitch = config.pitch;
+
     utterance.onend = () => {
       playBtn.classList.remove("hidden");
       pauseBtn.classList.add("hidden");
@@ -114,13 +143,14 @@ function appendAssistantBubble(text) {
     stopBtn.classList.remove("hidden");
   };
 
+
   pauseBtn.onclick = () => {
     if (speechSynthesis.paused) {
       speechSynthesis.resume();
       pauseBtn.textContent = "⏸️";
     } else {
       speechSynthesis.pause();
-      pauseBtn.textContent = "▶️"; // continue
+      pauseBtn.textContent = "▶️";
     }
   };
 
@@ -132,14 +162,12 @@ function appendAssistantBubble(text) {
     pauseBtn.textContent = "⏸️";
   };
 
-  // Build DOM
   controls.appendChild(playBtn);
   controls.appendChild(pauseBtn);
   controls.appendChild(stopBtn);
 
   footer.appendChild(controls);
   footer.appendChild(ts);
-
   bubble.appendChild(footer);
 
   row.appendChild(avatar);
@@ -147,7 +175,6 @@ function appendAssistantBubble(text) {
   chatEl.appendChild(row);
   chatEl.scrollTop = chatEl.scrollHeight;
 }
-
 
 
 // Typing indicator
@@ -241,10 +268,15 @@ roleEl.addEventListener("change", () => {
   appendAssistantBubble(`Hi! I'm your ${currentRole.toLowerCase()}. How can I support you today?`);
 });
 
-// 🎙️ Voice recording (SpeechRecognition API)
+// Default greeting on page load
+window.onload = () => {
+  appendAssistantBubble(`Hi! I'm your ${currentRole.toLowerCase()}. How can I support you today?`);
+};
+
+// Voice recording (SpeechRecognition API)
 if ("webkitSpeechRecognition" in window) {
   recognition = new webkitSpeechRecognition();
-  recognition.lang = "en-US"; // you can set "zh-CN" for Chinese
+  recognition.lang = "en-US"; 
   recognition.continuous = false;
   recognition.interimResults = false;
 
